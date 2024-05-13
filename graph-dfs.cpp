@@ -9,7 +9,8 @@ private:
     void dfs(int node, vector<vector<int>>& adj, vector<int>& vis, vector<int>& ls) {
         vis[node] = 1;
         ls.push_back(node);
-        for (int neighbor : adj[node]) {
+        for (int i = 0; i < adj[node].size(); i++) {
+            int neighbor = adj[node][i];
             if (!vis[neighbor]) {
                 dfs(neighbor, adj, vis, ls);
             }

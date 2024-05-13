@@ -10,10 +10,10 @@ int countSubsets(int idx, vector<int>& a, int sum, int currentSum, int n) {
         }
         return 0;
     }
-   currentSum+=a[idx];
-   int l=countSubsets(idx+1,a,sum,currentSum,n);
-    int r=countSubsets(idx+1,a,sum,currentSum,n);
-    return l+r;
+
+    int includeCurrent = countSubsets(idx + 1, a, sum, currentSum + a[idx], n);
+    int excludeCurrent = countSubsets(idx + 1, a, sum, currentSum, n);
+    return includeCurrent + excludeCurrent;
 }
 
 int main() {
