@@ -1,30 +1,17 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include<iostream>
+#include<vector>
+#include<algorithm>
 using namespace std;
-
-int countSubsets(int idx, vector<int>& a, int sum, int currentSum, int n) {
-    if (idx == n) {
-        if (currentSum == sum) {
-            return 1;
+int main(){
+    string s;
+    int n=s.size();
+    for(int i=0;i<n;i++){
+        if(s[i]>='a' && s[i]<='z'){
+            s[i]=s[i]+'a'-'A';
         }
-        return 0;
+        else if(s[i]>='A' && s[i]>='Z'){
+            s[i]=s[i]+'A'-'a';
+        }
     }
-   currentSum+=a[idx];
-   int l=countSubsets(idx+1,a,sum,currentSum,n);
-    int r=countSubsets(idx+1,a,sum,currentSum,n);
-    return l+r;
-}
-
-int main() {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
-    int targetSum;
-    cin >> targetSum;
-    cout << countSubsets(0, a, targetSum, 0, n);
-    return 0;
+    cout<<s;
 }

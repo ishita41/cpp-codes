@@ -22,19 +22,19 @@ void leftview(node* root) {
     if (root == NULL) return;
     queue<node*> q;
     q.push(root);
-
     while (!q.empty()) {
         int n = q.size();
-        for (int i = 1; i <=n; i++) {
-            node* temp = q.front();
-            q.pop();
-            
-            if (i == 1 ) {
+        for (int i = 0; i < n; i++) {
+            node* temp = q.front(); q.pop();
+            if (i == 0) { // This ensures we print only the first node at the current level
                 cout << temp->data << " ";
             }
-
-            if (temp->left) q.push(temp->left);
-            if (temp->right) q.push(temp->right);
+            if (temp->left != NULL) {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL) {
+                q.push(temp->right);
+            }
         }
     }
 }

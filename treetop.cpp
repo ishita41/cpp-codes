@@ -42,7 +42,7 @@ void topview(node* root) {
         }
 
         if (f->left) q.push({f->left, s - 1});
-        if (f->right) q.pus h({f->right, s + 1});
+        if (f->right) q.push({f->right, s + 1});
     }
 
     for (auto it : mp) {
