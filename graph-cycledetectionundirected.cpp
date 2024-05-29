@@ -1,55 +1,43 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-class Solution {
-private:
-    bool dfs(int node, int parent, int vis[], vector<int> adj[]) {
-        vis[node] = 1;
-        // visit adjacent nodes
-        for (auto adjacentNode : adj[node]) {
-            // unvisited adjacent node
-            if (!vis[adjacentNode]) {
-                if (dfs(adjacentNode, node, vis, adj) == true)
-                    return true;
-            }
-            // visited node but not a parent node
-            else if (adjacentNode != parent)
-                return true;
-        }
-        return false;
+void addedge(vector<int> adj[], int u, int v) {
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+}
+
+bool dfs(int node, vector<int> adj[], int parent, int vis[]) {
+    vis[node] = 1;
+    for (int i = 0; i < adj[node].size(); i++) {
+        int neigh = adj[node][i];
+        if (!vis[neigh]) {
+            if (dfs(neigh, adj, node, vis) == true) return true;
+        } else if (neigh != parent) return true;
     }
-public:
-    // Function to detect cycle in an undirected graph.
-    bool isCycle(int V, vector<int> adj[]) {
-        int vis[V] = {0};
-        // for graph with connected components
-        for (int i = 0; i < V; i++) {
-            if (!vis[i]) {
-                if (dfs(i, -1, vis, adj) == true)
-                    return true;
-            }
+    return false;
+}
+
+bool iscycle(vector<int> adj[], int v) {
+    int vis[v] = {0};
+    for (int i = 0; i < v; i++) {
+        if (!vis[i]) {
+            if (dfs(i, adj, -1, vis) == true) return true;
         }
-        return false;
     }
-};
+    return false;
+}
 
 int main() {
-    int V, E;
-    cin >> V >> E;
-    vector<int> adj[V];
-
-    for (int i = 0; i < E; i++) {
-        int u, v;
-        cin >> u >> v;
-        adj[u].push_back(v);
-        adj[v].push_back(u);
+    int v, e;
+    cin >> v >> e;
+    vector<int> adj[v];
+    for (int i = 0; i < e; i++) {
+        int u, w;  
+        cin >> u >> w;
+        addedge(adj, u, w);
     }
-
-    Solution obj;
-    bool ans = obj.isCycle(V, adj);
-    if (ans)
-        cout << "1\n";
-    else
-        cout << "0\n";
+    if (iscycle(adj, v)) cout << "yes" << endl;
+    else cout << "no" << endl;
     return 0;
 }
