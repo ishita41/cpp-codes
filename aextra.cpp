@@ -1,7 +1,6 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
-#include<map>
 using namespace std;
 int main(){
     int n;
@@ -10,21 +9,29 @@ int main(){
     for(int i=0;i<n;i++){
         cin>>a[i];
     }
-    int k;
-    cin>>k;
-    map<int,int>mp;
-    int sum=0;
-    int len=0;
-    for(int i=0;i<n;i++){
-        sum+=a[i];
-        if(sum==k){
-            len=max(len,i+1);
+    int left=0,right=n-1;
+    int maxleft=0,maxright=0;
+    int res=0;
+    while(left<=right){
+        if(a[left]<=a[right]){
+            if(a[left]>=maxleft){
+            maxleft=a[left];
+            }
+        
+        else{
+            res+=maxleft-a[left];
         }
-        int rem=sum-k;
-        if(mp.find(rem)!=mp.end()){
-            int ans=i-mp[rem];
-            len=max(len,ans);
+        left++;
         }
-        mp[sum]=i;
+        else{
+            if(a[right]>maxright){
+                maxright=a[right];
+            }
+            else{
+                res+=maxright-a[right];
+            }
+            right--;
+        }
     }
+    cout<<res<<endl;
 }
