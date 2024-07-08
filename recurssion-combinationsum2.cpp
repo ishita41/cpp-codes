@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
 class Solution {
 public: 
     void findCombination(int ind, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int>&ds) {
@@ -17,9 +16,7 @@ public:
             findCombination(ind, target - arr[ind], arr, ans, ds); 
             ds.pop_back(); 
         }
-        
         findCombination(ind+1, target, arr, ans, ds); 
-        
     }
 };
 
