@@ -28,4 +28,4 @@ int main() {
     cin >> s;
     cout << solve(s) << endl;
     return 0;
-}
+} 

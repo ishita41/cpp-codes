@@ -1,38 +1,31 @@
-#include <iostream>
-#include <vector>
+#include<iostream>
+#include<vector>
+#include<algorithm>
 using namespace std;
 
-int main() {
+int main(){
     int n;
     cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++) {
+    vector<int> a(n);
+    for(int i = 0; i < n; i++){
         cin >> a[i];
     }
-    int k;
-    cin >> k;
-    
-    vector<bool> prev(k + 1, false);
-    if (a[0] <= k) {
-        prev[a[0]] = true;
-    }
-
-    for (int i = 1; i < n; i++) {
-        vector<bool> curr(k + 1, false);
-        curr[0] = true;
-
-        for (int target = 1; target <= k; target++) {
-            bool nottaken = prev[target];
-            bool taken = false;
-            if (a[i] <= target) {
-                taken = prev[target - a[i]];
+    int sum;
+    cin >> sum;
+    vector<bool> curr(sum + 1, false);
+    vector<bool> prev(sum + 1, false);
+    prev[0] = true;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j <= sum; j++){
+            bool take = false;
+            bool nottake = prev[j];
+            if(a[i] <= j){
+                take = prev[j - a[i]];
             }
-            curr[target] = nottaken || taken;
+            curr[j] = take || nottake;
         }
         prev = curr;
     }
-
-    cout << prev[k] << endl;
-
+    cout << prev[sum] << endl;
     return 0;
 }

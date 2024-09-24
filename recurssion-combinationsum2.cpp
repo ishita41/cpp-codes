@@ -1,54 +1,43 @@
-#include <iostream>
-#include <vector>
+#include<iostream>
+#include<vector>
+#include<algorithm>
 using namespace std;
-class Solution {
-public: 
-    void findCombination(int ind, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int>&ds) {
-        if(ind == arr.size()) {
-            if(target == 0) {
-                ans.push_back(ds); 
-            }
-            return; 
-        }
-        // pick up the element 
-        if(arr[ind] <= target) {
-            ds.push_back(arr[ind]); 
-            findCombination(ind, target - arr[ind], arr, ans, ds); 
-            ds.pop_back(); 
-        }
-        findCombination(ind+1, target, arr, ans, ds); 
-    }
-};
 
-int main() {
-    Solution solution;
-    
-    // Taking user input for array elements
-    int n;
-    cout << "Enter the number of elements in the array: ";
-    cin >> n;
-    
-    vector<int> candidates(n);
-    cout << "Enter the elements of the array: ";
-    for(int i = 0; i < n; ++i) {
-        cin >> candidates[i];
+void findsum(int idx, int t, int csum, int a[], vector<vector<int>>& ans, vector<int>& ds, int n) {
+    if (csum == t) {
+        ans.push_back(ds);
+        return;
     }
-    
-    int target;
-    cout << "Enter the target sum: ";
-    cin >> target;
-    
-    vector<vector<int>> ans; 
-    vector<int> ds; 
-    solution.findCombination(0, target, candidates, ans, ds); 
-        
-    // Printing the answer using for loops
-    for(int i = 0; i < ans.size(); ++i) {
-        for(int j = 0; j < ans[i].size(); ++j) {
+    for (int i = idx; i < n; i++) {
+        if (i > idx && a[i] == a[i - 1]) continue;
+        ds.push_back(a[i]);
+        findsum(i + 1, t, csum + a[i], a, ans, ds, n);
+        ds.pop_back();
+    }
+}
+
+void printans(vector<vector<int>> ans) {
+    for (int i = 0; i < ans.size(); i++) {
+        for (int j = 0; j < ans[i].size(); j++) {
             cout << ans[i][j] << " ";
         }
         cout << endl;
     }
+}
 
+int main() {
+    int n;
+    cin >> n;
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    sort(a, a + n);
+    int t;
+    cin >> t;
+    vector<vector<int>> ans;
+    vector<int> ds;
+    findsum(0, t, 0, a, ans, ds, n);
+    printans(ans);
     return 0;
 }

@@ -1,42 +1,35 @@
-#include <iostream>
-#include <vector>
+#include<iostream>
+#include<vector>
+#include<algorithm>
 using namespace std;
-
-void solve(string digits, string output, int index, vector<string> &ans, string mapping[]) {
-    if (index >= digits.length()) {
+void solve(string digit,string output,int idx,vector<string>&ans,string map[]){
+    if(idx>=digit.size()){
         ans.push_back(output);
-        return;
+        return ;
     }
-    int number = digits[index] - '0';
-    string value = mapping[number];
-    for (int i = 0; i < value.length(); i++) {
+    int num=digit[idx]-'0';
+    string value=map[num];
+    for(int i=0;i<value.size();i++){
         output.push_back(value[i]);
-        solve(digits, output, index + 1, ans, mapping);
+        solve(digit,output,idx+1,ans,map);
         output.pop_back();
     }
 }
-
-vector<vector<string>> lettercombination(string digits) {
-    vector<string> ans;
-    vector<vector<string>> res;
-    if (digits.length() == 0) return res;
+vector<string>combinatiosn(string digit){
+    vector<string>ans;
+    if(digit.size()==0) return ans;
     string output;
-    int index = 0;
-    string mapping[10] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-    solve(digits, output, index, ans, mapping);
-    res.push_back(ans);
-    return res;
+    int idx=0;
+    string map[10]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    solve(digit,output,idx,ans,map);
+    return ans;
 }
-
-int main() {
-    string input;
-    cin >> input;
-    vector<vector<string>> result = lettercombination(input);
-    for (int i = 0; i < result.size(); ++i) {
-        for (int j = 0; j < result[i].size(); ++j) {
-            cout << result[i][j] << " ";
-        }
-        cout << endl;
+int main(){
+    string digit;
+    cin>>digit;
+    vector<string>res=combinatiosn(digit);
+    for(int i=0;i<res.size();i++){
+        cout<<res[i]<<" ";
     }
-    return 0;
+    cout<<endl;
 }
